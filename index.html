@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Days Counter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    background: url('/anh/duy\ tk.jpg') center center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 0.5s;
+    }
+    body.dark {
+      background: linear-gradient(to bottom, #1f1f2e, #2d2d44);
+      color: #eee;
+    }
+    .container {
+      background: url('8fbbbcf1-82ca-4621-8bae-003c77913ea3.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 30px;
+      width: 350px;
+      height: 700px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      position: relative;
+      padding: 20px;
+      box-sizing: border-box;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      display: inline-block;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.2); /* Màu nền nhẹ */
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .heart {
+      font-size: 32px;
+      margin: 10px 0;
+    }
+    .profile {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 20px;
+      position: relative;
+    }
+    .profile img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+    .profile label {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      padding: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .profile input[type="file"] {
+      display: none;
+    }
+    .names {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .counter {
+      margin-top: 60px;
+    }
+    .time-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .time-box {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+      padding: 10px;
+      color: #d1005d;
+      font-weight: bold;
+      min-width: 60px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .time-box .number {
+      font-size: 22px;
+      font-weight: 600;
+      display: block;
+    }
+    .date-picker {
+      margin-top: 20px;
+    }
+    input[type="date"] {
+      padding: 8px;
+      border-radius: 20px;
+      border: 1px solid #d1005d;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      text-align: center;
+      color: #d1005d;
+      background-color: rgba(255,255,255,0.9);
+    }
+    label {
+      font-size: 13px;
+      color: #fff;
+      background-color: rgba(209, 0, 93, 0.8);
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+    .heart-animation {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://i.imgur.com/yJxZTQ9.png') no-repeat center center;
+      background-size: contain;
+      animation: float 6s infinite;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120%);
+        opacity: 0;
+      }
+    }
+    .toggle-darkmode {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">🌙</button>
+    <audio autoplay loop hidden>
+      <source src="https://youtu.be/ISNBfryBkSo?si=4N2Nh8u1mp6n6SFc" type="audio/mpeg">
+    </audio>
+    <div class="counter">
+      <div>Tình EOOO của tớ nè 💗💗💛</div>
+      <div class="time-boxes">
+        <div class="time-box"><span class="number" id="days">0</span>Ngày</div>
+        <div class="time-box"><span class="number" id="hours">0</span>Giờ</div>
+        <div class="time-box"><span class="number" id="minutes">0</span>Phút</div>
+        <div class="time-box"><span class="number" id="seconds">0</span>Giây</div>
+      </div>
+    </div>
+    <div class="date-picker">
+      <label for="loveDate">Chọn ngày bắt đầu yêu:</label><br>
+      <input type="date" id="loveDate" />
+    </div>
+    <div class="profile">
+<div style="text-align: center;">
+  <div style="position: relative; display: inline-block; margin-right: 40px;">
+    <img id="myAvatar" src="/mnt/data/c9944cc6-7325-46ea-b906-0423625a8e95.png" alt="." style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+    <label for="input1" style="position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background-color: rgba(255,255,255,0.85); border-radius: 50%; padding: 6px; font-size: 16px; cursor: pointer; border: 2px solid #d1005d; color: #d1005d;">📷</label>
+    <input type="file" id="input1" accept="image/*" onchange="loadAvatar(event, 'myAvatar')" style="display: none;">
+  </div>
+
+  <div style="position: relative; display: inline-block;">
+    <img id="loverAvatar" src="https://i.imgur.com/0y0CzHo.png" alt="." style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+    <label for="input2" style="position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background-color: rgba(255,255,255,0.85); border-radius: 50%; padding: 6px; font-size: 16px; cursor: pointer; border: 2px solid #d1005d; color: #d1005d;">📷</label>
+    <input type="file" id="input2" accept="image/*" onchange="loadAvatar(event, 'loverAvatar')" style="display: none;">
+  </div>
+</div>
+</div>
+
+    </div>
+  </div>
+
+  <script>
+    const dateInput = document.getElementById('loveDate');
+
+    function updateTime(dateStr) {
+      const startDate = new Date(dateStr);
+      const now = new Date();
+      const diff = now - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    dateInput.addEventListener('change', () => {
+      const selectedDate = dateInput.value;
+      localStorage.setItem('loveDate', selectedDate);
+      updateTime(selectedDate);
+    });
+
+    const storedDate = localStorage.getItem('loveDate');
+    if (storedDate) {
+      dateInput.value = storedDate;
+      setInterval(() => updateTime(storedDate), 1000);
+    }
+
+    function loadAvatar(event, id) {
+      const img = document.getElementById(id);
+      img.src = URL.createObjectURL(event.target.files[0]);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-animation');
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.top = '100%';
+      document.querySelector('.container').appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 800);
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+  </script>
+</body>
+</html>
